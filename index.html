@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <span id="result"></span>
+
+    <div id="camera"></div>
+
+    <script src="quagga.min.js"></script>
+
+    <button id="close" type="button">Kapat</button>
+    <button id="open" type="button">Ac</button>
+
+    <script>
+        main();
+        function main() {
+
+            Quagga.init({
+                inputStream : {
+                    name : "Live",
+                    type : "LiveStream",
+                    numOfWorkers: navigator.hardwareConcurrency,
+                    target: document.querySelector('#camera') 
+                },
+                decoder: {
+                    readers : ['ean_reader','ean_8_reader','code_39_reader','code_39_vin_reader','codabar_reader','upc_reader','upc_e_reader']
+                }
+            },function(err) {
+                if (err) { console.log(err); return }
+                Quagga.initialized = true;
+                Quagga.start();
+            });
+
+
+            // okuma islemi sucess oldugu zaman gelen veriyi donduren alan
+            Quagga.onDetected(function(data){
+                console.log(data);
+                document.getElementById('result').innerHTML = data.codeResult.code;
+            });
+        }
+
+        //---------------------------------------------------------------
+        // kamerayi kapatip acma olaylari
+        let closeElement = document.getElementById('close');
+        let openElement = document.getElementById('open');
+
+        closeElement.addEventListener('click', () => {
+            Quagga.stop();
+        })
+
+        openElement.addEventListener('click', () => {
+            main();
+        })
+        //---------------------------------------------------------------
+
+
+        // https://serratus.github.io/quaggaJS/  documentation
+    </script>
+</body>
+</html>
+
