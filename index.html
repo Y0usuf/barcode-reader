@@ -7,14 +7,15 @@
     <title>Document</title>
 </head>
 <body>
+    <h3>BARCODE READER</h3>
     <span id="result"></span>
 
     <div id="camera"></div>
 
     <script src="quagga.min.js"></script>
 
-    <button id="close" type="button">Kapat</button>
-    <button id="open" type="button">Ac</button>
+    <button id="close" type="button">close</button>
+    <button id="open" type="button">open</button>
 
     <script>
         main();
@@ -28,7 +29,7 @@
                     target: document.querySelector('#camera') 
                 },
                 decoder: {
-                    readers : ['ean_reader','ean_8_reader','code_39_reader','code_39_vin_reader','codabar_reader','upc_reader','upc_e_reader']
+                    readers : ['ean_reader','ean_8_reader','code_39_reader','code_39_vin_reader','codabar_reader','upc_reader','upc_e_reader','code_128_reader', 'ean_5_reader', 'ean_2_reader', 'i2of5_reader', '2of5_reader','code_93_reader']
                 }
             },function(err) {
                 if (err) { console.log(err); return }
